@@ -1,0 +1,29 @@
+---
+- name: Configure managed nodes
+  hosts: all
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Create virtual host file
+      copy:
+        content: |
+          server {
+              listen 80;
+              server_name localhost;
+              location / {
+                  root /var/www/html;
+                  index index.html;
+              }
+          }
+        dest: /etc/nginx/sites-enabled/default
+
+    - name: Create index.html
+      copy:
+        content: "<h1>Welcome to Ansible managed node!</h1>"
+        dest: /var/www/html/index.html
+
+    - name: Restart Supervisor to apply changes
+      shell: supervisorctl reload

@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  control-node:
+    build:
+      context: ./control-node
+      dockerfile: Dockerfile
+    container_name: control-node
+    volumes:
+      - ./control-node:/control-node
+    networks:
+      - mynetwork
+
+  managed-node-1:
+    build:
+      context: ./managed-node
+      dockerfile: Dockerfile
+    container_name: managed-node-1
+    networks:
+      - mynetwork
+    ports:
+      - "2222:22"
+      - "8081:80"
+
+  managed-node-2:
+    build:
+      context: ./managed-node
+      dockerfile: Dockerfile
+    container_name: managed-node-2
+    networks:
+      - mynetwork
+    ports:
+      - "2223:22"
+      - "8082:80"
+
+networks:
+  mynetwork:
+    driver: bridge

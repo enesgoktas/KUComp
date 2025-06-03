@@ -1,0 +1,3 @@
+[all]
+managed-node-1 ansible_host=managed-node-1 ansible_port=22
+managed-node-2 ansible_host=managed-node-2 ansible_port=22
